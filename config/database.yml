@@ -1,0 +1,69 @@
+# MySQL. Versions 5.5.8 and up are supported.
+#
+# Install the MySQL server
+#   brew install mysql
+#
+# And the gem
+#   gem install mysql2
+#
+# And then create the database
+#   mysql -u root -e "CREATE DATABASE myapp_development;"
+#   mysql -u root -e "CREATE DATABASE myapp_test;"
+#
+#
+#   Ensure the MySQL 2 gem is defined in your Gemfile
+#   gem "mysql2"
+#
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password:
+  host: 127.0.0.1
+
+development:
+  <<: *default
+  database: vision_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: vision_test
+
+
+# As with config/credentials.yml, you never want to store sensitive information,
+# like your database password, in your source code. If your source code is
+# ever seen by anyone, they now have access to your database.
+#
+# Instead, store the password in a secure environment variable.
+#
+# On your production server, define a full connection string as an environment
+# variable.
+#
+#   DATABASE_URL="mysql2://myuser:mypass@127.0.0.1/somedatabase"
+#
+# You can use this database configuration with Kamal:
+#
+#   kamal env push
+#
+production:
+  primary:
+    <<: *default
+    database: vision_production
+    username: vision
+    password: <%= ENV["VISION_DATABASE_PASSWORD"] %>
+  cache:
+    <<: *default
+    database: vision_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: vision_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: vision_production_cable
+    migrations_paths: db/cable_migrate
