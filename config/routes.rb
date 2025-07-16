@@ -15,6 +15,9 @@ Rails.application.routes.draw do
 
   get "about" => "home#about", as: :about
   get "contact" => "home#contact", as: :contact
+  get "dashboard" => "home#index", as: :dashboard
+  resources :departments
+
   # Defines the root path route ("/")
   root "home#index"
 end

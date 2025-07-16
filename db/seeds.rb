@@ -6,4 +6,21 @@
 #
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+#   %>
+
+User.destroy_all
+Team.destroy_all
+
+admin_user = User.create!(
+  email_address: "admin@admin.com",
+  password: "qasd745im",
+  password_confirmation: "qasd745im"
+)
+
+gusto_team = Team.create!(
+  name: "Gusto",
+  personal_team: true,
+  user: admin_user
+)
+
+admin_user.update!(team: gusto_team)

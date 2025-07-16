@@ -2,6 +2,7 @@ import { createInertiaApp } from '@inertiajs/react'
 import { createElement, JSXElementConstructor, ReactElement, ReactNode, ReactPortal } from 'react'
 import { createRoot } from 'react-dom/client'
 import Layout from '../components/Layout'
+import appLayout from '../layouts/app-layout'
 
 // Temporary type definition, until @inertiajs/react provides one
 type ResolvedComponent = {
@@ -33,7 +34,7 @@ createInertiaApp({
     // and use the following line.
     // see https://inertia-rails.dev/guide/pages#default-layouts
     //
-    page.default.layout ||= (page: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined) => createElement(Layout, null, page)
+    page.default.layout ||= (page: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined) => createElement(appLayout, null, page)
 
     return page
   },
