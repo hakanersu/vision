@@ -1,5 +1,5 @@
 class Department < ApplicationRecord
-  belongs_to :team
+  include TeamScoped
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { minimum: 3 }
 end

@@ -1,12 +1,10 @@
 require "test_helper"
 
 class DepartmentsControllerTest < ActionDispatch::IntegrationTest
-  include Rails.application.routes.url_helpers
   setup do
     @department = departments(:one) # Assuming you have fixtures for departments
     @user = users(:admin_user)
-    Current.session = @user.sessions.create!(user_agent: "Test Agent", ip_address: "127.0.0.1")
-    cookies.signed[:session_id] = Current.session.id
+    session[:user_id] = @user.id
   end
 
   test "should get index with pagination" do

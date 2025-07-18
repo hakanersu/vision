@@ -12,7 +12,7 @@ class DepartmentsController < ApplicationController
 
   def new
     @department = Department.new
-    render inertia: "departments/New", props: { department: @department }
+    render inertia: "departments/DepartmentCreate", props: { department: @department }
   end
 
   def edit
@@ -25,7 +25,7 @@ class DepartmentsController < ApplicationController
     if @department.save
       redirect_to departments_path, notice: "Department was successfully created."
     else
-      render inertia: "departments/New", props: { department: @department, errors: @department.errors.full_messages }
+      render inertia: "departments/DepartmentEdit", props: { department: @department, errors: @department.errors.messages.transform_values { |messages| messages.join(", ") } }, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +33,7 @@ class DepartmentsController < ApplicationController
     if @department.update(department_params)
       redirect_to departments_path, notice: "Department was successfully updated."
     else
-      render inertia: "Departments/Edit", props: { department: @department, errors: @department.errors.full_messages }
+      render inertia: "Departments/Edit", props: { department: @department, errors: @department.errors.messages.transform_values { |messages| messages.join(", ") } }, status: :unprocessable_entity
     end
   end
 

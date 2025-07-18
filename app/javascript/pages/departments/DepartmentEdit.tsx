@@ -1,14 +1,12 @@
-import AppLayout from "@/layouts/app-layout";
 import { BreadcrumbItem } from "@/types";
 import { Head, useForm, usePage } from "@inertiajs/react";
 
 import Form from "@rjsf/shadcn";
 import { RJSFSchema } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
-import { FormEventHandler, useEffect } from "react";
 
 import { IChangeEvent } from "@rjsf/core";
-import { ErrorSchemaBuilder, ErrorSchema } from "@rjsf/utils";
+import { ErrorSchemaBuilder } from "@rjsf/utils";
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -37,13 +35,13 @@ const log = (type: any) => console.log.bind(console, type);
 
 export default function DepartmentIndex() {
   const { department } = usePage<{ department: DepartmentForm }>().props;
-  const { data, setData, post, reset, errors, processing, recentlySuccessful } =
-    useForm<Required<DepartmentForm>>({
-      name: department.name || "",
-    });
+  const { data, setData, post, reset, errors, processing } = useForm<Required<DepartmentForm>>({
+    name: department.name || "",
+  });
 
-  console.log(data);
+  console.log(errors)
   const builder = new ErrorSchemaBuilder();
+
   if (errors && errors.name) {
     builder.addErrors(errors.name, "name");
   }
