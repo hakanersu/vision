@@ -1,0 +1,4 @@
+one:
+  name: Team One
+  personal_team: false
+  user: admin_user # Assuming you have a user fixture named 'admin_user'

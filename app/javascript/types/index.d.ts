@@ -45,11 +45,7 @@ export interface User {
 // Gendepartmentseric paginated type
 export interface Paginated<T> {
     data: T[];
-    per_page: number;
-    to: number;
-    total: number;
-    from: number;
-    last_page: number;
+    total_pages: number;
     current_page: number;
     meta: {
         links: any[];

@@ -8,8 +8,9 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   %>
 
-User.destroy_all
+Department.destroy_all
 Team.destroy_all
+User.destroy_all
 
 admin_user = User.create!(
   email_address: "admin@admin.com",
@@ -24,3 +25,13 @@ gusto_team = Team.create!(
 )
 
 admin_user.update!(team: gusto_team)
+
+Department.create!(
+  name: "Engineering",
+  team: gusto_team
+)
+
+Department.create!(
+  name: "Marketing",
+  team: gusto_team
+)

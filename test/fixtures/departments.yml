@@ -1,0 +1,7 @@
+one:
+  name: Department One
+  team: one # Assuming you have a team fixture named 'one'
+
+two:
+  name: Department Two
+  team: one

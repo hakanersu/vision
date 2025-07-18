@@ -2,21 +2,21 @@ class DepartmentsController < ApplicationController
   before_action :set_department, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @departments = Department.all
-    render inertia: "departments/DepartmentIndex", props: { departments: @departments }
+    @departments = Department.page(params[:page]).per(10) 
+    render inertia: "departments/DepartmentIndex", props: { departments: { data: @departments, current_page: @departments.current_page, total_pages: @departments.total_pages}}
   end
 
   def show
-    render inertia: "Departments/Show", props: { department: @department }
+    render inertia: "departments/Show", props: { department: @department }
   end
 
   def new
     @department = Department.new
-    render inertia: "Departments/New", props: { department: @department }
+    render inertia: "departments/New", props: { department: @department }
   end
 
   def edit
-    render inertia: "Departments/Edit", props: { department: @department }
+    render inertia: "departments/DepartmentEdit", props: { department: @department }
   end
 
   def create
@@ -25,7 +25,7 @@ class DepartmentsController < ApplicationController
     if @department.save
       redirect_to departments_path, notice: "Department was successfully created."
     else
-      render inertia: "Departments/New", props: { department: @department, errors: @department.errors.full_messages }
+      render inertia: "departments/New", props: { department: @department, errors: @department.errors.full_messages }
     end
   end
 

@@ -19,18 +19,13 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Button } from "@/components/ui/button"
 import { ChevronDown } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Link } from "@inertiajs/react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     pagination?: {
         current_page: number
-        last_page: number
-        total: number
-        per_page: number
-        from: number
-        to: number
+        total_pages: number
     }
     onPageChange?: (page: number) => void
     filterColumn?: string // name of the column to filter
@@ -41,14 +36,13 @@ interface DataTableProps<TData, TValue> {
 export function DataGrid<TData, TValue>({
     columns,
     data,
-    pagination,
-    onPageChange,
     filterColumn = "name",
     filterPlaceholder = "Filter departments...",
     action,
 }: DataTableProps<TData, TValue>) {
+    const safeData = Array.isArray(data) ? data : [];
     const table = useReactTable({
-        data,
+        data: safeData,
         columns,
         getCoreRowModel: getCoreRowModel(),
     })
@@ -94,7 +88,7 @@ export function DataGrid<TData, TValue>({
                     <div className="ml-5">{action}</div>
                 )}
             </div>
-            <div className="rounded-md border">
+           <div className="rounded-md border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -138,34 +132,9 @@ export function DataGrid<TData, TValue>({
                         )}
                     </TableBody>
                 </Table>
-            </div>
+            </div> 
 
-            {pagination && (
-                <div className="flex items-center justify-between mt-5">
-                    <div className="text-sm text-muted-foreground">
-                        Showing {pagination.from} to {pagination.to} of {pagination.total} results
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <button
-                            onClick={() => onPageChange?.(pagination.current_page - 1)}
-                            disabled={pagination.current_page <= 1}
-                            className="cursor-pointer px-3 py-1 text-sm border rounded disabled:opacity-50"
-                        >
-                            Previous
-                        </button>
-                        <span className="px-3 py-1 text-sm">
-                            Page {pagination.current_page} of {pagination.last_page}
-                        </span>
-                        <button
-                            onClick={() => onPageChange?.(pagination.current_page + 1)}
-                            disabled={pagination.current_page >= pagination.last_page}
-                            className="cursor-pointer px-3 py-1 text-sm border rounded disabled:opacity-50"
-                        >
-                            Next
-                        </button>
-                    </div>
-                </div>
-            )}
+       
         </div>
     )
 }
