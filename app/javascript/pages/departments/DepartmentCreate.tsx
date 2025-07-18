@@ -10,12 +10,6 @@ import { FormEventHandler } from "react";
 import { IChangeEvent } from '@rjsf/core';
 import { ErrorSchemaBuilder, ErrorSchema } from "@rjsf/utils";
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Departmanlar',
-        href: '/deparments',
-    },
-];
 
 const schema: RJSFSchema = {
     "title": "Departman ekleme formu",
@@ -40,7 +34,7 @@ const log = (type: any) => console.log.bind(console, type);
 
 export default function DepartmentIndex() {
 
-    const { data, setData, post, reset, errors, processing, recentlySuccessful } = useForm<Required<DepartmentForm>>({
+    const { data, setData, post, reset, errors, processing } = useForm<Required<DepartmentForm>>({
         name: '',
     });
     
@@ -48,7 +42,7 @@ export default function DepartmentIndex() {
     if (errors && errors.name) {
         builder.addErrors(errors.name, 'name');
     }
-    const submit = (e: IChangeEvent<DepartmentForm>) => {
+    const submit = () => {
         post("/departments", {
             preserveScroll: true,
             onFinish: () => reset('name'),

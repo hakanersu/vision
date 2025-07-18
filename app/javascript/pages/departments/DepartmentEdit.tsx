@@ -1,19 +1,11 @@
-import { BreadcrumbItem } from "@/types";
 import { Head, useForm, usePage } from "@inertiajs/react";
 
 import Form from "@rjsf/shadcn";
 import { RJSFSchema } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
 
-import { IChangeEvent } from "@rjsf/core";
 import { ErrorSchemaBuilder } from "@rjsf/utils";
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: "Departmanlar",
-    href: "/deparments",
-  },
-];
 
 const schema: RJSFSchema = {
   title: "Departman ekleme formu",
@@ -45,7 +37,7 @@ export default function DepartmentIndex() {
   if (errors && errors.name) {
     builder.addErrors(errors.name, "name");
   }
-  const submit = (e: IChangeEvent<DepartmentForm>) => {
+  const submit = () => {
     post("/departments", {
       preserveScroll: true,
       onFinish: () => reset("name"),
