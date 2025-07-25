@@ -2,7 +2,10 @@ class DepartmentsController < ApplicationController
   before_action :set_department, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @departments = Department.page(params[:page]).per(10) 
+    @departments = Department.left_joins(:users)
+                             .select('departments.*, COUNT(users.id) as users_count')
+                             .group('departments.id')
+                             .page(params[:page]).per(5)
     render inertia: "departments/DepartmentIndex", props: { departments: { data: @departments, current_page: @departments.current_page, total_pages: @departments.total_pages}}
   end
 

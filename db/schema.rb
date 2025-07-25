@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_15_162355) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_15_162349) do
   create_table "departments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "team_id", null: false
@@ -38,8 +38,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_15_162355) do
     t.boolean "feature_9001", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -48,12 +46,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_15_162355) do
     t.bigint "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "department_id", null: false
+    t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
   add_foreign_key "departments", "teams", on_delete: :cascade
   add_foreign_key "sessions", "users"
-  add_foreign_key "teams", "users"
   add_foreign_key "users", "teams"
 end

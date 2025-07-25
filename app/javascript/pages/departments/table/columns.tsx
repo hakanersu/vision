@@ -17,6 +17,9 @@ import { Link } from "@inertiajs/react"
 export type Department = {
   id: string
   name: string
+  manager: string
+  employee_count: number
+  description?: string
   created_at: string
   updated_at: string
 }
