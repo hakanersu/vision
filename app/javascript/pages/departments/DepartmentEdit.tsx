@@ -20,6 +20,7 @@ const schema: RJSFSchema = {
   },
 };
 type DepartmentForm = {
+  id: number;
   name: string;
 };
 
@@ -27,18 +28,18 @@ const log = (type: any) => console.log.bind(console, type);
 
 export default function DepartmentIndex() {
   const { department } = usePage<{ department: DepartmentForm }>().props;
-  const { data, setData, post, reset, errors, processing } = useForm<Required<DepartmentForm>>({
+  const { data, setData, patch, reset, errors, processing } = useForm<Required<DepartmentForm>>({
+    id: department.id,
     name: department.name || "",
   });
 
-  console.log(errors)
   const builder = new ErrorSchemaBuilder();
 
   if (errors && errors.name) {
     builder.addErrors(errors.name, "name");
   }
   const submit = () => {
-    post("/departments", {
+    patch(`/departments/${department.id}`, {
       preserveScroll: true,
       onFinish: () => reset("name"),
     });

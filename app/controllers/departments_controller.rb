@@ -25,7 +25,7 @@ class DepartmentsController < ApplicationController
     if @department.save
       redirect_to departments_path, notice: "Department was successfully created."
     else
-      render inertia: "departments/DepartmentEdit", props: { department: @department, errors: @department.errors.messages.transform_values { |messages| messages.join(", ") } }, status: :unprocessable_entity
+      render inertia: "departments/DepartmentCreate", props: { department: @department, errors: @department.errors.messages.transform_values { |messages| messages.join(", ") } }, status: :unprocessable_entity
     end
   end
 
